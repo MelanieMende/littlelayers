@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f7c945">
+    <title>LittleLayers</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icon.svg">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="app-title">
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun"></div>
+          <div class="hill hill-one"></div>
+          <div class="hill hill-two"></div>
+          <div class="house">
+            <div class="roof"></div>
+            <div class="walls">
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <div class="tree">
+            <span class="tree-crown"></span>
+            <span class="tree-trunk"></span>
+          </div>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Anziehen nach Wetter, Raum und Alter</p>
+          <h1 id="app-title">LittleLayers</h1>
+          <p>Speichere die wichtigsten Angaben und erhalte eine klare Tages- und Nacht-Empfehlung.</p>
+        </div>
+      </section>
+
+      <section class="panel input-panel" aria-labelledby="settings-title">
+        <div class="section-heading">
+          <div>
+            <h2 id="settings-title">Angaben</h2>
+            <p class="section-description">Alter, Raumtemperatur und Wetter helfen dabei, die Kleidung für Tag und Nacht passend einzuschätzen.</p>
+          </div>
+        </div>
+
+        <form id="layersForm" autocomplete="on">
+          <label>
+            Geburtstag des Kindes
+            <input id="birthdate" name="birthdate" type="date" required>
+          </label>
+
+          <label>
+            Schlafzimmer-Temperatur
+            <span class="range-row">
+              <input id="roomTemp" name="roomTemp" type="range" min="14" max="28" step="0.5" value="19">
+              <output id="roomTempOutput" for="roomTemp">19 °C</output>
+            </span>
+          </label>
+
+          <fieldset class="weather-section">
+            <legend>Außentemperatur</legend>
+            <p class="field-help" id="weather-mode-help">Wähle, ob LittleLayers die Außentemperatur aus dem Wetterdienst lädt oder ob du sie selbst einträgst.</p>
+
+            <div class="segmented" role="group" aria-label="Wetterquelle" aria-describedby="weather-mode-help">
+              <button class="segment active" id="autoWeather" type="button">Automatisch</button>
+              <button class="segment" id="manualWeather" type="button">Manuell</button>
+            </div>
+
+            <div class="auto-weather" id="autoWeatherFields">
+              <label>
+                Standort
+                <span class="location-row">
+                  <input id="locationInput" name="location" type="text" placeholder="z. B. Berlin" inputmode="search">
+                  <button class="icon-button" id="locateButton" type="button" aria-label="Standort automatisch erkennen" title="Standort automatisch erkennen">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M12 2v3"></path>
+                      <path d="M12 19v3"></path>
+                      <path d="M2 12h3"></path>
+                      <path d="M19 12h3"></path>
+                      <circle cx="12" cy="12" r="7"></circle>
+                      <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                  </button>
+                </span>
+              </label>
+
+              <section class="weather-timeline" id="weatherTimeline" aria-live="polite">
+                <div class="timeline-heading">
+                  <h3>Tagesverlauf</h3>
+                  <span id="timelineSummary">Noch kein Wetter geladen</span>
+                </div>
+                <div class="timeline-chart" id="weatherTimelineList"></div>
+              </section>
+            </div>
+
+            <div class="manual-weather hidden" id="manualWeatherFields">
+              <label>
+                Temperatur
+                <span class="range-row">
+                  <input id="outsideTemp" name="outsideTemp" type="range" min="-15" max="40" step="1" value="18">
+                  <output id="outsideTempOutput" for="outsideTemp">18 °C</output>
+                </span>
+              </label>
+
+              <label class="checkbox-row">
+                <input id="windRain" name="windRain" type="checkbox">
+                Wind oder Regen
+              </label>
+            </div>
+          </fieldset>
+        </form>
+
+        <p class="status" id="statusText" role="status">Bereit für deine Eingaben.</p>
+      </section>
+
+      <section class="recommendations" aria-labelledby="recommendations-title">
+        <div class="section-heading">
+          <h2 id="recommendations-title">Empfehlung</h2>
+          <span class="age-pill" id="agePill">Alter offen</span>
+        </div>
+
+        <article class="recommendation-card day-card">
+          <div class="card-title">
+            <span class="card-icon day-icon" aria-hidden="true">
+              <svg class="mini-house" viewBox="0 0 64 64" aria-hidden="true">
+                <path class="mini-house-grass" d="M0 49c11-7 21-9 31-6 11 3 19 10 33 5v16H0z"></path>
+                <path class="mini-house-roof" d="M10 31 32 12l22 19h-8v21H18V31z"></path>
+                <path class="mini-house-wall" d="M18 31h28v21H18z"></path>
+                <path class="mini-house-door" d="M28 39h8v13h-8z"></path>
+                <path class="mini-house-window" d="M22 36h7v7h-7zm13 0h7v7h-7z"></path>
+              </svg>
+            </span>
+            <h3>Drinnen am Tag</h3>
+          </div>
+          <ul id="insideList"></ul>
+        </article>
+
+        <article class="recommendation-card outside-card">
+          <div class="card-title">
+            <span class="card-icon outside-icon" aria-hidden="true"></span>
+            <h3>Draußen am Tag</h3>
+          </div>
+          <ul id="outsideList"></ul>
+        </article>
+
+        <article class="recommendation-card night-card">
+          <div class="card-title">
+            <span class="card-icon night-icon" aria-hidden="true"></span>
+            <h3>In der Nacht</h3>
+          </div>
+          <ul id="nightList"></ul>
+        </article>
+      </section>
+
+      <section class="note-panel">
+        <p>LittleLayers ist eine Alltagshilfe und ersetzt keine medizinische Beratung. Prüfe regelmäßig Nacken oder Brust deines Kindes: warm und trocken ist meist ein gutes Zeichen.</p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

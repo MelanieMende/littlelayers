@@ -1,0 +1,17 @@
+{
+  "name": "LittleLayers",
+  "short_name": "LittleLayers",
+  "description": "Kleidungsempfehlungen fuer Kinder nach Alter, Raumtemperatur und Wetter.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#edf6f4",
+  "theme_color": "#f7c945",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

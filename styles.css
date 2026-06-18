@@ -212,6 +212,7 @@ h1 {
 .panel {
   border-radius: 8px;
   min-width: 0;
+  overflow: hidden;
   padding: 18px;
 }
 
@@ -300,9 +301,14 @@ label {
 
 input[type="date"],
 input[type="text"] {
+  box-sizing: border-box;
+  display: block;
+  inline-size: 100%;
   min-height: 48px;
+  min-inline-size: 0;
   min-width: 0;
   width: 100%;
+  max-inline-size: 100%;
   max-width: 100%;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -313,6 +319,9 @@ input[type="text"] {
 }
 
 input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  max-width: -webkit-fill-available;
   -webkit-min-logical-width: 0;
 }
 

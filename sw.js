@@ -1,4 +1,4 @@
-const CACHE_NAME = "littlelayers-v27";
+const CACHE_NAME = "littlelayers-v28";
 const ASSETS = [
   "./",
   "./index.html",
